@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <h1>id = {{ $task->id }} のタスク詳細ページ</h1>
 
     <table class="table table-bordered">
@@ -11,13 +10,20 @@
         </tr>
         
         <tr>
+            <th>ユーザーID</th>
+            <td>{{ $task->user_id }}</td>
+        </tr>
+        
+        <tr>
             <th>ステータス</th>
             <td>{{ $task->status }}</td>
         </tr>
         
         <tr>
             <th>タスク</th>
-            <td>{{ $task->content }}</td>
+            <td>
+                    {{ $task->content }}
+            </td>
         </tr>
     </table>
     
@@ -28,5 +34,4 @@
     {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
         {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
-    
 @endsection
