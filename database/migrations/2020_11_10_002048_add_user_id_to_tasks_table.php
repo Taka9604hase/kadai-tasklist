@@ -30,8 +30,7 @@ class AddUserIdToTasksTable extends Migration
     public function down()
     {
         //外部キー制約の削除
-        $table->dropForeign('tasks_us
-        er_id_foreign');
+        $table->dropForeign('tasks_user_id_foreign');
         // user_idカラムを削除
         Schema::dropIfExists('user_id');
     }
