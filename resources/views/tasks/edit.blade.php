@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Auth::check())
     <h1>id: {{ $task->id }} のタスク編集ページ</h1>
 
     <div class="row">
@@ -9,7 +9,7 @@
             {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
                 <div class="form-group">
                     {!! Form::label('user_id', 'ユーザーID : ') !!}
-                    {!! Form::hidden('user_id', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('user_id', null, ['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-group">
@@ -27,5 +27,5 @@
             {!! Form::close() !!}
         </div>
     </div>
-
+@endif
 @endsection

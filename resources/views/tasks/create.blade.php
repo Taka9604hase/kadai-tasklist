@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Auth::check())
     <h1>タスク新規作成ページ</h1>
 
     <div class="row">
@@ -10,7 +10,8 @@
         
                 <div class="form-group">
                     {!! Form::label('user_id', 'ユーザーID :') !!}
-                    {!! Form::text('user_id', null, ['class' => 'form-control']) !!}
+                    {!! Form::label(Auth::id()) !!}
+                    {{-- {!! Form::text('user_id', null, ['class' => 'form-control']) !!} --}}
                 </div>
                     
                 <div class="form-group">
@@ -28,4 +29,5 @@
             {!! Form::close() !!}
         </div>
     </div>
+@endif
 @endsection
