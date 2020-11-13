@@ -27,7 +27,7 @@ class TasksController extends Controller
                 'tasks' => $tasks,
             ];
         }
-        // Welcomeビューでそれらを表示
+        
         return view('tasks.index', $data);
     }
         
@@ -69,11 +69,14 @@ class TasksController extends Controller
 
         // タスクを作成
         $task = new Task;
-    
+        
             $task->user_id = \Auth::id();
             $task->status = $request->status;
             $task->content = $request->content;
-            $task->save();
+            
+            if (\Auth::id() === $task->user_id) {
+                $task->save();
+            }
         // トップページへリダイレクトさせる
         return redirect('/');
     }
@@ -89,11 +92,12 @@ class TasksController extends Controller
         // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
 
-        // メッセージ詳細ビューでそれを表示
-        return view('tasks.show', [
-            'task' => $task,
-        ]);
-        
+            // メッセージ詳細ビューでそれを表示
+            return view('tasks.show', [
+                'task' => $task,
+            ]);
+            
+        return redirect('/');
     }
 
     /**
@@ -106,11 +110,12 @@ class TasksController extends Controller
     {
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
-
-        // タスク編集ビューでそれを表示
-        return view('tasks.edit', [
-            'task' => $task,
-        ]);
+        
+            // タスク編集ビューでそれを表示
+            return view('tasks.edit', [
+              'task' => $task,
+            ]);
+        return redirect('/');
     }
 
     /**
@@ -131,13 +136,14 @@ class TasksController extends Controller
         // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
         
-        if (\Auth::id() === $task->user_id) {
             $task->user_id = $request->user_id;
             $task->status = $request->status;
             // タスクを更新
             $task->content = $request->content;
-            $task->save();
-        }
+            
+            if (\Auth::id() === $task->user_id) {
+                $task->save();
+            }
         // トップページへリダイレクトさせる
         return redirect('/');
     }
