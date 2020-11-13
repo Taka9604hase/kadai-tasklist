@@ -45,12 +45,11 @@ class TasksController extends Controller
      */
     public function create()
     {
-        $task = new Task;
-        // タスク作成ビューを表示
-        return view('tasks.create', [
-            'task' => $task,
-        ]);
-        
+            $task = new Task;
+                // タスク作成ビューを表示
+                return view('tasks.create', [
+                    'task' => $task,
+                ]);
     }
 
     /**
@@ -91,12 +90,12 @@ class TasksController extends Controller
     {
         // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
-
+            if (\Auth::id() === $task->user_id) {
             // メッセージ詳細ビューでそれを表示
-            return view('tasks.show', [
-                'task' => $task,
-            ]);
-            
+                return view('tasks.show', [
+                    'task' => $task,
+                ]);
+            }
         return redirect('/');
     }
 
@@ -110,11 +109,12 @@ class TasksController extends Controller
     {
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
-        
-            // タスク編集ビューでそれを表示
-            return view('tasks.edit', [
-              'task' => $task,
-            ]);
+            if (\Auth::id() === $task->user_id) {
+                // タスク編集ビューでそれを表示
+                return view('tasks.edit', [
+                    'task' => $task,
+                ]);
+            }
         return redirect('/');
     }
 
