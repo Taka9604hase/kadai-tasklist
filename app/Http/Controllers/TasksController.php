@@ -45,11 +45,12 @@ class TasksController extends Controller
      */
     public function create()
     {
-            $task = new Task;
-                // タスク作成ビューを表示
-                return view('tasks.create', [
-                    'task' => $task,
-                ]);
+        $task = new Task;
+        // タスク作成ビューを表示
+        return view('tasks.create', [
+            'task' => $task,
+        ]);
+        
     }
 
     /**
@@ -63,19 +64,15 @@ class TasksController extends Controller
         // バリデーション
         $request->validate([
             'status' => 'required|max:10',
-            'content' => 'required|max:10',
+            'content' => 'required',
         ]);
 
         // タスクを作成
         $task = new Task;
-        
             $task->user_id = \Auth::id();
             $task->status = $request->status;
             $task->content = $request->content;
-            
-            if (\Auth::id() === $task->user_id) {
-                $task->save();
-            }
+            $task->save();
         // トップページへリダイレクトさせる
         return redirect('/');
     }
@@ -91,12 +88,12 @@ class TasksController extends Controller
         // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
             if (\Auth::id() === $task->user_id) {
-            // メッセージ詳細ビューでそれを表示
+                // メッセージ詳細ビューでそれを表示
                 return view('tasks.show', [
                     'task' => $task,
                 ]);
             }
-        return redirect('/');
+            return redirect('/');
     }
 
     /**
@@ -130,7 +127,7 @@ class TasksController extends Controller
         // バリデーション
         $request->validate([
             'status' => 'required|max:10',
-            'content' => 'required|max:10',
+            'content' => 'required',
         ]);
         
         // idの値でメッセージを検索して取得
@@ -140,10 +137,7 @@ class TasksController extends Controller
             $task->status = $request->status;
             // タスクを更新
             $task->content = $request->content;
-            
-            if (\Auth::id() === $task->user_id) {
-                $task->save();
-            }
+            $task->save();
         // トップページへリダイレクトさせる
         return redirect('/');
     }
